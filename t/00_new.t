@@ -6,11 +6,11 @@ use lib 'C:/Users/sw/Desktop/Math';
 use Test::More;
 
 # test of import functionality
-use_ok('Math::XS');
+use_ok('Math::C::XS');
 
 # test of constructor
-my $got_1 = Math::XS->new(1);
-my $exp_1 = "Math::XS";
+my $got_1 = Math::C::XS->new(1);
+my $exp_1 = "Math::C::XS";
 isa_ok($got_1, $exp_1);
 
 # test of attributes

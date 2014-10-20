@@ -10,8 +10,8 @@ use_ok('Math::C::XS');
 my $obj = Math::C::XS->new(0);
 
 # test of cosine function
-my $got_1 = $obj->cos;
-my $exp_1 = 1;
+my $got_1 = $obj->asin;
+my $exp_1 = 0;
 cmp_ok($got_1, "==", $exp_1);
 
 # add tests here

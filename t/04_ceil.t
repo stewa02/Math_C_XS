@@ -6,8 +6,8 @@ use lib 'C:/Users/sw/Desktop/Math';
 use Test::More;
 
 # test of import functionality
-use_ok('Math::XS');
-my $obj = Math::XS->new(3.14);
+use_ok('Math::C::XS');
+my $obj = Math::C::XS->new(3.14);
 
 # test of cosine function
 my $got_1 = $obj->ceil;

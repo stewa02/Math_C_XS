@@ -5,7 +5,7 @@
 
 #include <math.h>
 
-MODULE = Math::XS PACKAGE = Math::XS
+MODULE = Math::C::XS PACKAGE = Math::C::XS
 
 PROTOTYPES: ENABLED
 
@@ -27,10 +27,24 @@ cos(SV *self)
         HV *self_hv = MUTABLE_HV(SvRV(self));
         SV **callback_ptr = hv_fetchs(self_hv, "zahl", 0);
         SV *zahl = *callback_ptr;
+
         double x = SvNV(zahl);
         RETVAL = cos(x);
     OUTPUT:
         RETVAL
+
+double
+acos(SV *self)
+    CODE:
+        HV *self_hv = MUTABLE_HV(SvRV(self));
+        SV **callback_ptr = hv_fetchs(self_hv, "zahl", 0);
+        SV *zahl = *callback_ptr;
+
+        double x = SvNV(zahl);
+        RETVAL = acos(x);
+    OUTPUT:
+        RETVAL
+
 
 double
 sin(SV *self)
@@ -38,10 +52,24 @@ sin(SV *self)
         HV *self_hv = MUTABLE_HV(SvRV(self));
         SV **callback_ptr = hv_fetchs(self_hv, "zahl", 0);
         SV *zahl = *callback_ptr;
+
         double x = SvNV(zahl);
         RETVAL = sin(x);
     OUTPUT:
         RETVAL
+
+double
+asin(SV *self)
+    CODE:
+        HV *self_hv = MUTABLE_HV(SvRV(self));
+        SV **callback_ptr = hv_fetchs(self_hv, "zahl", 0);
+        SV *zahl = *callback_ptr;
+
+        double x = SvNV(zahl);
+        RETVAL = asin(x);
+    OUTPUT:
+        RETVAL
+
 
 double
 floor(SV *self) 
@@ -49,6 +77,7 @@ floor(SV *self)
         HV *self_hv = MUTABLE_HV(SvRV(self));
         SV **callback_ptr = hv_fetchs(self_hv, "zahl", 0);
         SV *zahl = *callback_ptr;
+
         double x = SvNV(zahl); 
         RETVAL = floor(x);
     OUTPUT:
@@ -60,6 +89,7 @@ ceil(SV *self)
         HV *self_hv = MUTABLE_HV(SvRV(self));
         SV **callback_ptr = hv_fetchs(self_hv, "zahl", 0);
         SV *zahl = *callback_ptr;
+
         double x = SvNV(zahl); 
         RETVAL = ceil(x);
     OUTPUT:

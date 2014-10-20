@@ -1,6 +1,6 @@
 #!/usr/bin/perl
 
-package Math::XS;
+package Math::C::XS;
 use strict;
 use warnings;
 
@@ -8,7 +8,7 @@ use XSLoader;
 
 our $VERSION = '0.001';
 
-XSLoader::load('Math::XS', $VERSION);
+XSLoader::load('Math::C::XS', $VERSION);
 
 1;
 
@@ -22,7 +22,7 @@ Math::XS - Object-oriented interface to the C Math-library
 
 =head1 SYNOPSIS
 
-    use Math::XS;
+    use Math::C::XS;
     my $number = Math::XS->new(3.14);
 
     # cos and sin
