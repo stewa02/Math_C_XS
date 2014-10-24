@@ -7,12 +7,17 @@ use Test::More;
 
 # test of import functionality
 use_ok('Math::C::XS');
-my $obj = Math::C::XS->new(1);
+my $obj = Math::C::XS->new(Number => 1);
 
-# test of cosine function
+# oo interface
 my $got_1 = $obj->acos;
 my $exp_1 = 0;
 cmp_ok($got_1, "==", $exp_1);
+
+# functional interface
+my $got_2 = Math::C::XS::acos(1);
+my $exp_2 = 0;
+cmp_ok($got_2, "==", $exp_2);
 
 # add tests here
 

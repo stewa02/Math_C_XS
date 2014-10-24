@@ -5,15 +5,33 @@
 
 #include <math.h>
 
-MODULE = Math::C::XS PACKAGE = Math::C::XS
+MODULE=Math::C::XS PACKAGE=Math::C::XS
 
 PROTOTYPES: ENABLED
 
 SV *
-new(const char *class, double zahl)
+new(const char *class, ...)
     CODE:
         HV *hash = newHV();
-        hv_store(hash, "zahl", strlen("zahl"), newSVnv(zahl), 0);
+
+        if ((items - 1) % 2) 
+            croak("Expected key-value pairs as arguments.");
+
+        hv_store( 
+            hash, 
+            "Radians", strlen("Radians"), 
+            newSViv(1),
+            0
+        );
+
+        int i;
+        for (i = 1; i < items; i += 2) {
+            SV *key = ST(i);
+            SV *value = newSVsv(ST(i + 1));
+
+            hv_store_ent(hash, key, value, 0);
+        }
+        
 
         SV *const self = newRV_noinc((SV *)hash);
 
@@ -22,11 +40,17 @@ new(const char *class, double zahl)
         RETVAL
 
 double
-cos(SV *self)
-    CODE:
-        HV *self_hv = MUTABLE_HV(SvRV(self));
-        SV **callback_ptr = hv_fetchs(self_hv, "zahl", 0);
-        SV *zahl = *callback_ptr;
+cos(SV *arg)
+    CODE: 
+        SV *zahl;
+        if (sv_isobject(arg)) {
+            HV *self_hv = MUTABLE_HV(SvRV(arg));
+            SV **callback_ptr = hv_fetchs(self_hv, "Number", 0);
+            zahl = *callback_ptr;
+        }
+        else {
+            zahl = newSVsv(arg);
+        }
 
         double x = SvNV(zahl);
         RETVAL = cos(x);
@@ -34,11 +58,17 @@ cos(SV *self)
         RETVAL
 
 double
-acos(SV *self)
+acos(SV *arg)
     CODE:
-        HV *self_hv = MUTABLE_HV(SvRV(self));
-        SV **callback_ptr = hv_fetchs(self_hv, "zahl", 0);
-        SV *zahl = *callback_ptr;
+        SV *zahl;
+        if (sv_isobject(arg)) {
+            HV *self_hv = MUTABLE_HV(SvRV(arg));
+            SV **callback_ptr = hv_fetchs(self_hv, "Number", 0);
+            zahl = *callback_ptr;
+        }
+        else {
+            zahl = newSVsv(arg);
+        }
 
         double x = SvNV(zahl);
         RETVAL = acos(x);
@@ -47,11 +77,17 @@ acos(SV *self)
 
 
 double
-sin(SV *self)
+sin(SV *arg)
     CODE:
-        HV *self_hv = MUTABLE_HV(SvRV(self));
-        SV **callback_ptr = hv_fetchs(self_hv, "zahl", 0);
-        SV *zahl = *callback_ptr;
+        SV *zahl;
+        if (sv_isobject(arg)) {
+            HV *self_hv = MUTABLE_HV(SvRV(arg));
+            SV **callback_ptr = hv_fetchs(self_hv, "Number", 0);
+            zahl = *callback_ptr;
+        }
+        else {
+            zahl = newSVsv(arg);
+        }
 
         double x = SvNV(zahl);
         RETVAL = sin(x);
@@ -59,11 +95,17 @@ sin(SV *self)
         RETVAL
 
 double
-asin(SV *self)
+asin(SV *arg)
     CODE:
-        HV *self_hv = MUTABLE_HV(SvRV(self));
-        SV **callback_ptr = hv_fetchs(self_hv, "zahl", 0);
-        SV *zahl = *callback_ptr;
+        SV *zahl;
+        if (sv_isobject(arg)) {
+            HV *self_hv = MUTABLE_HV(SvRV(arg));
+            SV **callback_ptr = hv_fetchs(self_hv, "Number", 0);
+            zahl = *callback_ptr;
+        }
+        else {
+            zahl = newSVsv(arg);
+        }
 
         double x = SvNV(zahl);
         RETVAL = asin(x);
@@ -72,11 +114,17 @@ asin(SV *self)
 
 
 double
-floor(SV *self) 
+floor(SV *arg) 
     CODE:
-        HV *self_hv = MUTABLE_HV(SvRV(self));
-        SV **callback_ptr = hv_fetchs(self_hv, "zahl", 0);
-        SV *zahl = *callback_ptr;
+        SV *zahl;
+        if (sv_isobject(arg)) {
+            HV *self_hv = MUTABLE_HV(SvRV(arg));
+            SV **callback_ptr = hv_fetchs(self_hv, "Number", 0);
+            zahl = *callback_ptr;
+        }
+        else {
+            zahl = newSVsv(arg);
+        }
 
         double x = SvNV(zahl); 
         RETVAL = floor(x);
@@ -84,11 +132,17 @@ floor(SV *self)
         RETVAL
 
 double
-ceil(SV *self) 
+ceil(SV *arg) 
     CODE:
-        HV *self_hv = MUTABLE_HV(SvRV(self));
-        SV **callback_ptr = hv_fetchs(self_hv, "zahl", 0);
-        SV *zahl = *callback_ptr;
+        SV *zahl;
+        if (sv_isobject(arg)) {
+            HV *self_hv = MUTABLE_HV(SvRV(arg));
+            SV **callback_ptr = hv_fetchs(self_hv, "Number", 0);
+            zahl = *callback_ptr;
+        }
+        else {
+            zahl = newSVsv(arg);
+        }
 
         double x = SvNV(zahl); 
         RETVAL = ceil(x);
